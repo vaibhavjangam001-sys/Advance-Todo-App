@@ -1,25 +1,28 @@
+import { NavLink } from "react-router-dom";
+
+const linkClass = ({ isActive }) =>
+  `relative px-4 py-2 font-medium transition-colors ${isActive ? "text-white" : "text-gray-300 hover:text-white"} after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-white after:transition-transform after:duration-300 ${isActive ? "after:scale-x-100" : "after:scale-x-0"} `;
+
 const Navbar = () => {
   return (
     <>
-      <nav className="h-[96px] bg-gradient-to-r from-blue-500 to-purple-600 pl-16 pr-16 flex justify-between items-center">
-        <img
-          className="mt-5 w-24 h-24 rounded-full object-cover"
-          src="/Logo.png"
-          alt="logo"
-        />
+      <nav className=" max-w-[1280px] m-auto rounded-2xl h-[96px] bg-[rgb(38,44,44)]  pl-4 pr-4 flex justify-between items-center">
+        <div className="flex items-center">
+          <img className=" w-16 h-16 object-cover" src="/Logo.png" alt="logo" />
+          <h1 className="pl-2 font-[var(--font-clash)] text-4xl font-bold tracking-wider text-white">
+            Focus<span className="text-amber-500">List</span>
+          </h1>
+        </div>
         <div className="flex h-[96px] gap-8 font-bold text-white text-[18px] items-center">
-          <div className="bg-slate-300 px-4 py-1 rounded-[10px] ">
-            <a href="#">Home</a>
-          </div>
-          <div>
-            <a href="#">About</a>
-          </div>
-          <div>
-            <a href="#">Contact</a>
-          </div>
-          <div>
-            <a href="#">Login/Sing Up</a>
-          </div>
+          <NavLink className={linkClass} to="/">
+            Home
+          </NavLink>
+          <NavLink className={linkClass} to="/contact">
+            Contact
+          </NavLink>
+          <NavLink className={linkClass} to="/singUpLogin">
+            Sing Up/Login
+          </NavLink>
         </div>
       </nav>
     </>
