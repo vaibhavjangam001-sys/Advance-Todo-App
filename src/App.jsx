@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import SingUpLogin from "./components/SingUpLogin";
-import Addtask from "./components/Addtask";
+
 
 const App = () => {
   return (
