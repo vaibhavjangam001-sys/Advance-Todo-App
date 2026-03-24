@@ -2,7 +2,7 @@ import Card from "./Card";
 
 const TaskContainer = () => {
   return (
-    <div className="h-auto w-full bg-[rgb(38,44,44)] rounded-2xl ">
+    <div className="h-auto w-full bg-[rgb(38,44,44)] rounded-2xl">
       <div className="lg:min-h-24 rounded-tl-2xl rounded-tr-2xl border-b-6 p-5 border-b-[#101828] gap-10 flex justify-center items-center">
         <div className="relative flex-[2]">
             <input
