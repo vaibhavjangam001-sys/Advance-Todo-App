@@ -1,7 +1,7 @@
 import Card from "./Card";
 import API from "../API/API";
 
-const TaskContainer = ({ taskData, getData }) => {
+const TaskContainer = ({ taskData, getData,editTask }) => {
   const deleteTodo = async (id) => {
     await fetch(`${API}/${id}`, {
       method: "DELETE",
@@ -63,7 +63,7 @@ const TaskContainer = ({ taskData, getData }) => {
       </div>
       <div className="p-20 flex flex-col gap-4">
         {taskData?.map((item) => (
-          <Card deleteTodo={deleteTodo}  key={item.id} item={item} />
+          <Card editTask={editTask} deleteTodo={deleteTodo}  key={item.id} item={item} />
         ))}
       </div>
     </div>

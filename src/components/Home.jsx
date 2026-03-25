@@ -20,8 +20,8 @@ const Home = () => {
   return (
     <div className=" h-[calc(100vh-96px)] mx-auto max-w-[1280px] flex flex-col gap-6">
       <Dashboard />
-      <Addtask getData={getData} />
-      <TaskContainer getData={getData} taskData={taskData} />
+      <Addtask getData={getData} taskData={taskData} />
+      
     </div>
   );
 };

@@ -1,10 +1,6 @@
 import Button from "./Button";
-import API from "../API/API";
 
-const Card = ({ item ,deleteTodo}) => {
-
-
-  
+const Card = ({ item ,deleteTodo,editTask}) => {
   return (
       <div className="bg-[#374151] flex flex-col p-4 w-full rounded-2xl gap-3">
         <div className="flex w-full gap-4">
@@ -15,10 +11,9 @@ const Card = ({ item ,deleteTodo}) => {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button img="../public/right.png" color="hover:bg-green-500/50" />
-            <Button img="../public/not.png" color="hover:bg-yellow-500/20" />
-            <Button img="../public/edit.png" color="hover:bg-violet-500/20" />
-            <Button id={item.id} deleteTodo={deleteTodo} img="../public/delete.png" color="hover:bg-red-500/20" />
+            <Button type="" id="" img="../public/right.png" color="hover:bg-green-500/50" />
+            <Button type="edit" id={item.id} Edit={editTask} img="../public/edit.png" color="hover:bg-violet-500/20" />
+            <Button type="delete" id={item.id} Delete={deleteTodo} img="../public/delete.png" color="hover:bg-red-500/20" />
           </div>
         </div>
 
@@ -26,12 +21,15 @@ const Card = ({ item ,deleteTodo}) => {
           <span className={`px-2 ${item.bgColor} py-1 w-[60px] flex justify-center items-center rounded text-xs font-semibold`}>
             {item.priority}
           </span>
-          <span className="bg-blue-500 flex justify-center px-2 py-1 items-center  w-[80px]  rounded text-xs font-semibold">
+          <span className="bg-blue-500 flex justify-center px-2 py-1 items-center  w-[100px]  rounded text-xs font-semibold">
             {item.category}
+          </span>
+          <span className="bg-amber-500 flex justify-center px-2 py-1 items-center  w-[100px]  rounded text-xs font-semibold">
+            {item.status}
           </span>
 
           <span className=" font-bold text-[#9CA3AF]">Created Date : {item.createDate}</span>
-          <span className=" ml-8 font-bold text-[#9CA3AF]">End Date  : {item.endDate}</span>
+          <span className=" ml-8 font-bold text-[#9CA3AF]">End Date  : {item.revEndDate}</span>
         </div>
       </div>
   );
