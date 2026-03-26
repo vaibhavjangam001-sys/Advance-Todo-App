@@ -1,4 +1,4 @@
-import { useRef, useState,useEffect} from "react";
+import { useRef, useState, useEffect } from "react";
 import API from "../API/API";
 import TaskContainer from "./TaskContainer";
 
@@ -10,7 +10,7 @@ const Addtask = ({ getData, taskData }) => {
   const [editId, setEditId] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useState(false);
-  const [errorMsg,setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const dateRef = useRef();
 
@@ -31,78 +31,74 @@ const Addtask = ({ getData, taskData }) => {
     }
   };
 
-
-useEffect(() => {
-  if (text.trim() !== "") {
-    setError(false);
-    setErrorMsg("");
-  }
-}, [text,category,priority,endDate]);
-
-
+  useEffect(() => {
+    if (text.trim() !== "") {
+      setError(false);
+      setErrorMsg("");
+    }
+  }, [text, category, priority, endDate]);
 
   const addTask = async () => {
-
-    if(!text && category === "Select Category" && priority === "Select Priority" && !endDate){
+    if (
+      !text &&
+      category === "Select Category" &&
+      priority === "Select Priority" &&
+      !endDate
+    ) {
       setError(true);
-      setErrorMsg(" Please enter a task, select a category, select a priority, and choose a due date.");
+      setErrorMsg(
+        " Please enter a task, select a category, select a priority, and choose a due date.",
+      );
       return;
-    }
-    else if (text.trim() === "") {
+    } else if (text.trim() === "") {
       setError(true);
       setErrorMsg("Please enter a task");
       return;
-    }
-    else if(category === "Select Category"){
+    } else if (category === "Select Category") {
       setError(true);
-      setErrorMsg("select a category")
+      setErrorMsg("select a category");
       return;
-    }
-    else if(priority === "Select Priority"){
+    } else if (priority === "Select Priority") {
       setError(true);
       setErrorMsg("select a priority");
       return;
-    }
-    else if(endDate === ""){
+    } else if (endDate === "") {
       setError(true);
       setErrorMsg("choose a due date");
       return;
-    }
-    else {
-      
-    const revEndDate = endDate.split("-").reverse().join("-");
-    const createDate = new Date().toLocaleString("en-IN");
+    } else {
+      const revEndDate = endDate.split("-").reverse().join("-");
+      const createDate = new Date().toLocaleString("en-IN");
 
-    let bgColor = "bg-green-500";
+      await fetch(`${API}/Todos`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+          category,
+          priority: [
+            priority,
+            priority === "Low"
+              ? "bg-green-500"
+              : priority === "Medium"
+                ? "bg-yellow-500"
+                : "bg-red-500",
+          ],
+          createDate,
+          revEndDate,
+          status: "Active",
+        }),
+      });
+      getData();
 
-    if (priority === "Medium") {
-      bgColor = "bg-yellow-500";
-    } else if (priority === "High") {
-      bgColor = "bg-red-500";
-    }
-
-    await fetch(`${API}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text,
-        category,
-        priority,
-        createDate,
-        revEndDate,
-        bgColor,
-      }),
-    });
-    getData();
-
-    setText("");
-    setCategory("Select Category");
-    setPriority("Select Priority");
-    setEndDate("");
-    setError(false);
-    setErrorMsg(null);
+      setText("");
+      setCategory("Select Category");
+      setPriority("Select Priority");
+      setEndDate("");
+      setError(false);
+      setErrorMsg(null);
     }
   };
 
@@ -110,15 +106,7 @@ useEffect(() => {
     const revEndDate = endDate.split("-").reverse().join("-");
     const createDate = new Date().toLocaleString("en-IN");
 
-    let bgColor = "bg-green-500";
-
-    if (priority === "Medium") {
-      bgColor = "bg-yellow-500";
-    } else if (priority === "High") {
-      bgColor = "bg-red-500";
-    }
-
-    const response = await fetch(`${API}/${editId}`, {
+    await fetch(`${API}/Todos/${editId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -126,10 +114,17 @@ useEffect(() => {
       body: JSON.stringify({
         text,
         category,
-        priority,
+        priority: [
+          priority,
+          priority === "Low"
+            ? "bg-green-500"
+            : priority === "Medium"
+              ? "bg-yellow-500"
+              : "bg-red-500",
+        ],
         createDate,
         revEndDate,
-        bgColor,
+        status: "Active",
       }),
     });
 
@@ -138,12 +133,14 @@ useEffect(() => {
   };
 
   const editTask = async (id) => {
-    const data = await fetch(`${API}/${id}`);
+    const data = await fetch(`${API}/Todos/${id}`);
     const result = await data.json();
 
     setText(result.text);
     setCategory(result.category);
-    setPriority(result.priority);
+    setPriority(
+  result.priority[0]
+    );
     const revEndDate = result.revEndDate.split("-").reverse().join("-");
     setEndDate(revEndDate);
     setEditId(result.id);
@@ -154,7 +151,9 @@ useEffect(() => {
 
   return (
     <>
-      <div className={`${error ? "h-auto" : "lg:h-80"} w-full p-8 bg-[rgb(38,44,44)] rounded-2xl flex flex-col gap-4`}>
+      <div
+        className={`${error ? "h-auto" : "lg:h-80"} w-full p-8 bg-[rgb(38,44,44)] rounded-2xl flex flex-col gap-4`}
+      >
         <div>
           <textarea
             autoComplete="off"
@@ -235,11 +234,13 @@ useEffect(() => {
             </button>
           )}
         </div>
-      {
-        error && errorMsg && ( <div className="flex-1 bg-red-600 rounded-2xl">
-         <span className="text-white font-bold text-sm pl-5">Warning : - {errorMsg} </span>
-       </div>)
-      }
+        {error && errorMsg && (
+          <div className="flex-1 bg-red-600 rounded-2xl">
+            <span className="text-white font-bold text-sm pl-5">
+              Warning : - {errorMsg}{" "}
+            </span>
+          </div>
+        )}
       </div>
       <TaskContainer
         editTask={editTask}

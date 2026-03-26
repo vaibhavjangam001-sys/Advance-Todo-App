@@ -3,7 +3,7 @@ import API from "../API/API";
 
 const TaskContainer = ({ taskData, getData,editTask }) => {
   const deleteTodo = async (id) => {
-    await fetch(`${API}/${id}`, {
+    await fetch(`${API}/Todos/${id}`, {
       method: "DELETE",
     });
     getData();

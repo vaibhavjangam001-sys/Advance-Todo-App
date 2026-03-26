@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import Addtask from "./Addtask";
 import Dashboard from "./Dashboard";
-import TaskContainer from "./TaskContainer";
 import API from "../API/API";
 
 const Home = () => {
   const [taskData, setTaskData] = useState([]);
 
   const getData = async () => {
-    const response = await fetch(`${API}`);
+    const response = await fetch(`${API}/Todos`);
     let data = await response.json();
     setTaskData(data);
   };
