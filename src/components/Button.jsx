@@ -1,5 +1,5 @@
 
-const Button = ({img,color,type,id,Edit,Delete}) => {
+const Button = ({img,color,type,id,Edit,Delete,complete}) => {
 
   const eventHadle = () => {
 
@@ -7,6 +7,7 @@ const Button = ({img,color,type,id,Edit,Delete}) => {
 
       case 'delete': Delete(id); break;
       case 'edit' : Edit(id); break;
+      case 'complete' : complete(id); break;
     }
   }
 
