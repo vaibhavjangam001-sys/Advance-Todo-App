@@ -39,6 +39,12 @@ const Addtask = ({ getData, taskData }) => {
   }, [text, category, priority, endDate]);
 
   const addTask = async () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const expiredDate = new Date(endDate);
+    expiredDate.setHours(0, 0, 0, 0);
+
     if (
       !text &&
       category === "Select Category" &&
@@ -65,6 +71,10 @@ const Addtask = ({ getData, taskData }) => {
     } else if (endDate === "") {
       setError(true);
       setErrorMsg("choose a due date");
+      return;
+    } else if (today > expiredDate) {
+      setError(true);
+      setErrorMsg("choose a  valid due date");
       return;
     } else {
       const revEndDate = endDate.split("-").reverse().join("-");
@@ -103,44 +113,88 @@ const Addtask = ({ getData, taskData }) => {
   };
 
   const updataTask = async () => {
-    const revEndDate = endDate.split("-").reverse().join("-");
-    const createDate = new Date().toLocaleString("en-IN");
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    await fetch(`${API}/Todos/${editId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text,
-        category,
-        priority: [
-          priority,
-          priority === "Low"
-            ? "bg-green-500"
-            : priority === "Medium"
-              ? "bg-yellow-500"
-              : "bg-red-500",
-        ],
-        createDate,
-        revEndDate,
-        status: "Active",
-      }),
-    });
+    const expiredDate = new Date(endDate);
+    expiredDate.setHours(0, 0, 0, 0);
 
-    getData();
-    resetForm();
+    if (
+      !text &&
+      category === "Select Category" &&
+      priority === "Select Priority" &&
+      !endDate
+    ) {
+      setError(true);
+      setErrorMsg(
+        " Please enter a task, select a category, select a priority, and choose a due date.",
+      );
+      return;
+    } else if (text.trim() === "") {
+      setError(true);
+      setErrorMsg("Please enter a task");
+      return;
+    } else if (category === "Select Category") {
+      setError(true);
+      setErrorMsg("select a category");
+      return;
+    } else if (priority === "Select Priority") {
+      setError(true);
+      setErrorMsg("select a priority");
+      return;
+    } else if (endDate === "") {
+      setError(true);
+      setErrorMsg("choose a due date");
+      return;
+    } else if (today > expiredDate) {
+      setError(true);
+      setErrorMsg("choose a  valid due date");
+      return;
+    } else {
+      const revEndDate = endDate.split("-").reverse().join("-");
+      const createDate = new Date().toLocaleString("en-IN");
+
+      await fetch(`${API}/Todos/${editId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+          category,
+          priority: [
+            priority,
+            priority === "Low"
+              ? "bg-green-500"
+              : priority === "Medium"
+                ? "bg-yellow-500"
+                : "bg-red-500",
+          ],
+          createDate,
+          revEndDate,
+          status: "Active",
+        }),
+      });
+
+      getData();
+      resetForm();
+    }
   };
 
   const editTask = async (id) => {
     const data = await fetch(`${API}/Todos/${id}`);
     const result = await data.json();
 
+    if (
+      result?.status.toLowerCase() === "completed" ||
+      result?.status.toLowerCase() === "expired"
+    ) {
+      return;
+    }
+
     setText(result.text);
     setCategory(result.category);
-    setPriority(
-  result.priority[0]
-    );
+    setPriority(result.priority[0]);
     const revEndDate = result.revEndDate.split("-").reverse().join("-");
     setEndDate(revEndDate);
     setEditId(result.id);
