@@ -13,17 +13,6 @@ const Navbar = () => {
             Focus<span className="text-amber-500">List</span>
           </h1>
         </div>
-        <div className="flex h-[96px] gap-8 font-bold text-white text-[18px] items-center">
-          <NavLink className={linkClass} to="/">
-            Home
-          </NavLink>
-          <NavLink className={linkClass} to="/contact">
-            Contact
-          </NavLink>
-          <NavLink className={linkClass} to="/singUpLogin">
-            Sing Up/Login
-          </NavLink>
-        </div>
       </nav>
     </>
   );
