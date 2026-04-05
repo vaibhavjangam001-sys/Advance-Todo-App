@@ -9,7 +9,7 @@ const Home = () => {
   const getData = async () => {
     const response = await fetch(`${API}/Todos`);
     let data = await response.json();
-    setTaskData(data);
+    setTaskData(data.Todos);
     console.log(data);
   };
 

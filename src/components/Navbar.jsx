@@ -8,7 +8,7 @@ const Navbar = () => {
     <>
       <nav className=" max-w-[1280px] m-auto rounded-2xl h-[96px] bg-[rgb(38,44,44)]  pl-4 pr-4 flex justify-between items-center">
         <div className="flex items-center">
-          <img className=" w-16 h-16 object-cover" src="/Advance-Todo-App/Logo.png" alt="logo" />
+          <img className=" w-16 h-16 object-cover" src={`${import.meta.env.BASE_URL}Logo.png`} alt="logo" />
           <h1 className="pl-2 font-[var(--font-clash)] text-4xl font-bold tracking-wider text-white">
             Focus<span className="text-amber-500">List</span>
           </h1>
