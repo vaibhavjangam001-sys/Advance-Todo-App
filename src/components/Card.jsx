@@ -15,21 +15,21 @@ const Card = ({ item, deleteTodo, editTask,completedTodo }) => {
             type="complete"
             id={item.id}
             complete={completedTodo}
-            img="../public/right.png"
+            img={`${import.meta.env.BASE_URL}right.png`}
             color="hover:bg-green-500/50"
           />
           <Button
             type="edit"
             id={item.id}
             Edit={editTask}
-            img="../public/edit.png"
+            img={`${import.meta.env.BASE_URL}edit.png`}
             color="hover:bg-violet-500/20"
           />
           <Button
             type="delete"
             id={item.id}
             Delete={deleteTodo}
-            img="../public/delete.png"
+            img={`${import.meta.env.BASE_URL}delete.png`}
             color="hover:bg-red-500/20"
           />
         </div>
