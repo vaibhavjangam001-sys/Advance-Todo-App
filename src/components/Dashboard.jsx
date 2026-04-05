@@ -17,16 +17,25 @@ const Dashboard = ({ taskData }) => {
     totalTask > 0 ? Math.round((completed * 100) / totalTask) : 0;
 
   return (
-    <div className="flex justify-center gap-10 items-center w-full min-h-[180px] md:min-h-[120px] lg:min-h-[140px]">
+    <div className="flex justify-center gap-10 items-center w-full min-h-[180px]">
       <Box value={totalTask} text="Total Tasks" />
       <Box color="text-yellow-500" value={active} text="Active" />
       <Box color="text-green-500" value={completed} text="Completed" />
       <Box color="text-red-500" value={expired} text="Expired" />
-      <Box
-        color="text-blue-500"
-        value={`${completionRate}%`}
-        text="Completion Rate"
-      />
+      <Box color="text-blue-500" value={`${completionRate}%`} text="Completion Rate" />
+    </div>
+  );
+};
+
+export default Dashboard;
+
+export const Box = ({ text, value, color }) => {
+  return (
+    <div className="w-96 h-22 bg-[rgb(38,44,44)] rounded-2xl">
+      <div className={`flex ${color} text-2xl justify-center pt-2 pb-2 font-bold`}>
+        <p>{text}</p>
+      </div>
+      <p className="flex justify-center font-bold text-2xl">{value}</p>
     </div>
   );
 };

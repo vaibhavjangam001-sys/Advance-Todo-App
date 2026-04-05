@@ -7,9 +7,13 @@ const Home = () => {
   const [taskData, setTaskData] = useState([]);
 
   const getData = async () => {
-    const response = await fetch(`${API}/Todos`);
-    let data = await response.json();
-    setTaskData(data.Todos);
+    try {
+      const response = await fetch(`${API}/Todos`);
+      const data = await response.json();
+      setTaskData(Array.isArray(data) ? data : []);
+    } catch (error) {
+      setTaskData([]);
+    }
   };
 
   useEffect(() => {
@@ -20,44 +24,48 @@ const Home = () => {
     await fetch(`${API}/Todos/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        status: "Expired",
-      }),
+      body: JSON.stringify({ status: "Expired" }),
     });
   };
 
- useEffect(() => {
-  const checkExpired = async () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+  useEffect(() => {
+    const checkExpired = async () => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-    let updated = false;
+      let updated = false;
 
-    for (let todo of taskData) {
-      const [day, month, year] = todo.revEndDate.split("-");
-      const expiredDate = new Date(year, month - 1, day);
-      expiredDate.setHours(0, 0, 0, 0);
+      for (let todo of taskData || []) {
+        if (!todo?.revEndDate || !todo?.status) continue;
 
-      if (
-        expiredDate < today &&
-        todo?.status.toLowerCase() === "active"
-      ) {
-        await filterExpiredTask(todo.id);
-        updated = true;
+        const parts = todo.revEndDate.split("-");
+        if (parts.length !== 3) continue;
+
+        const [day, month, year] = parts;
+        const expiredDate = new Date(year, month - 1, day);
+        expiredDate.setHours(0, 0, 0, 0);
+
+        if (
+          expiredDate < today &&
+          todo.status.toLowerCase() === "active"
+        ) {
+          await filterExpiredTask(todo.id);
+          updated = true;
+        }
       }
-    }
 
-    if (updated) {
-      getData();
-    }
-  };
+      if (updated) {
+        getData();
+      }
+    };
 
-  if (taskData.length > 0) {
-    checkExpired(); 
-  }
-}, [taskData]);
+    if (taskData?.length > 0) {
+      checkExpired();
+    }
+  }, [taskData]);
+
   return (
-    <div className=" h-[calc(100vh-96px)] mx-auto max-w-[1280px] flex flex-col gap-6">
+    <div className="h-[calc(100vh-96px)] mx-auto max-w-[1280px] flex flex-col gap-6">
       <Dashboard taskData={taskData} />
       <Addtask getData={getData} taskData={taskData} />
     </div>
