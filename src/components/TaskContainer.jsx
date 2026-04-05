@@ -70,7 +70,7 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
             placeholder="Search Todos..."
           />
           <img
-            src="/search.png"
+            src="public/search.png"
             alt="search"
             className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5"
           />

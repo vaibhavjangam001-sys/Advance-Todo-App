@@ -10,6 +10,7 @@ const Home = () => {
     const response = await fetch(`${API}/Todos`);
     let data = await response.json();
     setTaskData(data);
+    console.log(data);
   };
 
   useEffect(() => {
