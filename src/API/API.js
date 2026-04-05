@@ -1,5 +1,2 @@
-
-
-const API = "http://localhost:3000";
-
-export default API
+const API = "https://advance-todo-api.onrender.com";
+export default API;
