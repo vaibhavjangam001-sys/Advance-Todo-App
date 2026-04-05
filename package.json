@@ -2,7 +2,7 @@
   "name": "todo-app",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://your-username.github.io/Advance-Todo-App",
+  "homepage": "https://vaibhavjangam001-sys.github.io/Advance-Todo-App",
   "type": "module",
   "scripts": {
     "dev": "vite",

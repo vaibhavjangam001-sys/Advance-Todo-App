@@ -1,21 +1,27 @@
+const Button = ({ img, color, type, id, editTask, deleteTodo, completedTodo }) => {
 
-const Button = ({img,color,type,id,Edit,Delete,complete}) => {
-
-  const eventHadle = () => {
-
+  const eventHandle = () => {
     switch (type) {
-
-      case 'delete': Delete(id); break;
-      case 'edit' : Edit(id); break;
-      case 'complete' : complete(id); break;
+      case "delete":
+        deleteTodo?.(id);
+        break;
+      case "edit":
+        editTask?.(id);
+        break;
+      case "complete":
+        completedTodo?.(id);
+        break;
     }
-  }
+  };
 
   return (
-    <div onClick={eventHadle}  className={`h-14 w-14 rounded-[10px] cursor-pointer ${color} flex justify-center items-center`}>
-        <img className="h-10 w-10" src={img} alt="" />
+    <div
+      onClick={eventHandle}
+      className={`h-14 w-14 rounded-[10px] cursor-pointer ${color} flex justify-center items-center`}
+    >
+      <img className="h-10 w-10" src={img} alt="" />
     </div>
-  )
-}
+  );
+};
 
 export default Button;

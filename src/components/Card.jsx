@@ -1,11 +1,13 @@
 import Button from "./Button";
 
-const Card = ({ item, deleteTodo, editTask,completedTodo }) => {
+const Card = ({ item, deleteTodo, editTask, completedTodo }) => {
   return (
     <div className="bg-[#374151] flex flex-col p-4 w-full rounded-2xl gap-3">
       <div className="flex w-full gap-4">
         <div className="flex-1 h-20 bg-[#111827] p-4 rounded-2xl border border-[#4B5563] min-w-0">
-          <p className={`font-semibold text-[#E5E7EB] break-words ${item.status === "Completed" ? "line-through text-[#9CA3AF]" : item.status === "Expired" ? " line-through text-[#9CA3AF]" : null}`}>
+          <p
+            className={`font-semibold text-[#E5E7EB] break-words ${item.status === "Completed" ? "line-through text-[#9CA3AF]" : item.status === "Expired" ? " line-through text-[#9CA3AF]" : null}`}
+          >
             {item.text}
           </p>
         </div>
@@ -14,21 +16,23 @@ const Card = ({ item, deleteTodo, editTask,completedTodo }) => {
           <Button
             type="complete"
             id={item.id}
-            complete={completedTodo}
+            completedTodo={completedTodo}
             img={`${import.meta.env.BASE_URL}right.png`}
             color="hover:bg-green-500/50"
           />
+
           <Button
             type="edit"
             id={item.id}
-            Edit={editTask}
+            editTask={editTask}
             img={`${import.meta.env.BASE_URL}edit.png`}
             color="hover:bg-violet-500/20"
           />
+
           <Button
             type="delete"
             id={item.id}
-            Delete={deleteTodo}
+            deleteTodo={deleteTodo}
             img={`${import.meta.env.BASE_URL}delete.png`}
             color="hover:bg-red-500/20"
           />

@@ -25,7 +25,7 @@ const Addtask = ({ getData, taskData }) => {
 
   const handleSubmit = () => {
     if (isEdit) {
-      updataTask();
+      updateTask();
     } else {
       addTask();
     }
@@ -101,7 +101,7 @@ const Addtask = ({ getData, taskData }) => {
           status: "Active",
         }),
       });
-      getData();
+      await getData();
 
       setText("");
       setCategory("Select Category");
@@ -112,7 +112,7 @@ const Addtask = ({ getData, taskData }) => {
     }
   };
 
-  const updataTask = async () => {
+  const updateTask = async () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -155,7 +155,7 @@ const Addtask = ({ getData, taskData }) => {
       const createDate = new Date().toLocaleString("en-IN");
 
       await fetch(`${API}/Todos/${editId}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -176,7 +176,7 @@ const Addtask = ({ getData, taskData }) => {
         }),
       });
 
-      getData();
+      await getData();
       resetForm();
     }
   };

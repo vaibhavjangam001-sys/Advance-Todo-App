@@ -11,52 +11,56 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
-  const filterTodos = taskData.filter((todo) => {
-    return (
-      todo.text?.toLowerCase().includes(search.toLowerCase()) &&
-      (category === "All" ||
-        todo.category?.toLowerCase().includes(category.toLowerCase())) &&
-      (priority === "All" ||
-        todo.priority?.[0].toLowerCase() === priority.toLowerCase()) &&
-      (status === "All" || todo.status?.toLowerCase() === status.toLowerCase())
-    );
-  });
+ const filterTodos = Array.isArray(taskData)
+  ? taskData.filter((todo) => {
+      return (
+        todo.text?.toLowerCase().includes(search.toLowerCase()) &&
+        (category === "All" ||
+          todo.category?.toLowerCase().includes(category.toLowerCase())) &&
+        (priority === "All" ||
+          todo.priority?.[0].toLowerCase() === priority.toLowerCase()) &&
+        (status === "All" ||
+          todo.status?.toLowerCase() === status.toLowerCase())
+      );
+    })
+  : [];
 
-  const confirmDelete = async () => {
-    await fetch(`${API}/Todos/${selectedId}`, {
-      method: "DELETE",
-    });
-    getData();
-    setShowDelete(false);
-  };
+const confirmDelete = async () => {
+  await fetch(`${API}/Todos/${selectedId}`, {
+    method: "DELETE",
+  });
+  await getData();
+  setShowDelete(false);
+};
 
   const deleteTodo = (id) => {
     setSelectedId(id);
     setShowDelete(true);
   };
 
-  const completedTodo = async (id) => {
-    const response = await fetch(`${API}/Todos/${id}`);
-    const result = await response.json();
+const completedTodo = async (id) => {
+  const response = await fetch(`${API}/Todos/${id}`);
+  const result = await response.json();
 
-    if (
-      result?.status.toLowerCase() === "expired" ||
-      result?.status.toLowerCase() === "completed"
-    ) {
-      return;
-    } else {
-      await fetch(`${API}/Todos/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          status: "Completed",
-        }),
-      });
-      getData();
-    }
-  };
+  if (
+    result?.status.toLowerCase() === "expired" ||
+    result?.status.toLowerCase() === "completed"
+  ) {
+    return;
+  }
+
+  await fetch(`${API}/Todos/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      status: "Completed",
+    }),
+  });
+
+  await getData();
+};
 
   return (
     <div className="h-auto w-full bg-[rgb(38,44,44)] rounded-2xl">
