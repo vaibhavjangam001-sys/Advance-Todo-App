@@ -11,56 +11,57 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
- const filterTodos = Array.isArray(taskData)
-  ? taskData.filter((todo) => {
-      return (
-        todo.text?.toLowerCase().includes(search.toLowerCase()) &&
-        (category === "All" ||
-          todo.category?.toLowerCase().includes(category.toLowerCase())) &&
-        (priority === "All" ||
-          todo.priority?.[0].toLowerCase() === priority.toLowerCase()) &&
-        (status === "All" ||
-          todo.status?.toLowerCase() === status.toLowerCase())
-      );
-    })
-  : [];
+  const filterTodos = Array.isArray(taskData)
+    ? taskData.filter((todo) => {
+        return (
+          todo.text?.toLowerCase().includes(search.toLowerCase()) &&
+          (category === "All" ||
+            todo.category?.toLowerCase().includes(category.toLowerCase())) &&
+          (priority === "All" ||
+            todo.priority?.[0].toLowerCase() === priority.toLowerCase()) &&
+          (status === "All" ||
+            todo.status?.toLowerCase() === status.toLowerCase())
+        );
+      })
+    : [];
 
-const confirmDelete = async () => {
-  await fetch(`${API}/Todos/${selectedId}`, {
-    method: "DELETE",
-  });
-  await getData();
-  setShowDelete(false);
-};
+  const confirmDelete = async () => {
+    await fetch(`${API}/Todos/${selectedId}`, {
+      method: "DELETE",
+    });
+    await getData();
+    setShowDelete(false);
+  };
 
   const deleteTodo = (id) => {
     setSelectedId(id);
     setShowDelete(true);
   };
 
-const completedTodo = async (id) => {
-  const response = await fetch(`${API}/Todos/${id}`);
-  const result = await response.json();
+  const completedTodo = async (id) => {
+    const task = taskData.find((item) => item.id === id);
 
-  if (
-    result?.status.toLowerCase() === "expired" ||
-    result?.status.toLowerCase() === "completed"
-  ) {
-    return;
-  }
+    if (!task) return;
 
-  await fetch(`${API}/Todos/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      status: "Completed",
-    }),
-  });
+    if (
+      task?.status?.toLowerCase() === "completed" ||
+      task?.status?.toLowerCase() === "expired"
+    ) {
+      return;
+    }
 
-  await getData();
-};
+    await fetch(`${API}/Todos/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        status: "Completed",
+      }),
+    });
+
+    await getData();
+  };
 
   return (
     <div className="h-auto w-full bg-[rgb(38,44,44)] rounded-2xl">
@@ -74,7 +75,7 @@ const completedTodo = async (id) => {
             placeholder="Search Todos..."
           />
           <img
-            src={`${import.meta.env.BASE_URL}search.png`} 
+            src={`${import.meta.env.BASE_URL}search.png`}
             alt="search"
             className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5"
           />

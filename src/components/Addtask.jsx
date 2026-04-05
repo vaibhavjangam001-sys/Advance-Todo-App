@@ -181,27 +181,30 @@ const Addtask = ({ getData, taskData }) => {
     }
   };
 
-  const editTask = async (id) => {
-    const data = await fetch(`${API}/Todos/${id}`);
-    const result = await data.json();
+ const editTask = (id) => {
+  const result = taskData.find((item) => item.id === id);
 
-    if (
-      result?.status.toLowerCase() === "completed" ||
-      result?.status.toLowerCase() === "expired"
-    ) {
-      return;
-    }
+  if (!result) return;
 
-    setText(result.text);
-    setCategory(result.category);
-    setPriority(result.priority[0]);
-    const revEndDate = result.revEndDate.split("-").reverse().join("-");
-    setEndDate(revEndDate);
-    setEditId(result.id);
-    setIsEdit(true);
+  if (
+    result?.status?.toLowerCase() === "completed" ||
+    result?.status?.toLowerCase() === "expired"
+  ) {
+    return;
+  }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  setText(result.text);
+  setCategory(result.category);
+  setPriority(result.priority[0]);
+
+  const revEndDate = result.revEndDate.split("-").reverse().join("-");
+  setEndDate(revEndDate);
+
+  setEditId(result.id);
+  setIsEdit(true);
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 
   return (
     <>
