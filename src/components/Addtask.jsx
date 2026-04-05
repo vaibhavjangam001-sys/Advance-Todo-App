@@ -209,7 +209,7 @@ const Addtask = ({ getData, taskData }) => {
   return (
     <>
       <div
-        className={`${error ? "h-auto" : "lg:h-80"} w-full p-8 bg-[rgb(38,44,44)] rounded-2xl flex flex-col gap-4`}
+        className={`${error ? "h-auto" : "lg:h-80"} w-full p-8 mt-[-50px] bg-[rgb(38,44,44)] rounded-2xl flex flex-col gap-4`}
       >
         <div>
           <textarea
