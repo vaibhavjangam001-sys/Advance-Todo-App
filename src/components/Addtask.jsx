@@ -6,9 +6,12 @@ const Addtask = ({ getData, taskData }) => {
   const [text, setText] = useState("");
   const [category, setCategory] = useState("Select Category");
   const [priority, setPriority] = useState("Select Priority");
-  const [endDate, setEndDate] = useState("");
+  const [endDate, setEndDate] = useState(() => {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+});
   const [editId, setEditId] = useState(null);
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -18,7 +21,7 @@ const Addtask = ({ getData, taskData }) => {
     setText("");
     setCategory("Select Category");
     setPriority("Select Priority");
-    setEndDate("");
+    setEndDate(new Date().toISOString().split('T')[0]);
     setEditId(null);
     setIsEdit(false);
   };
@@ -106,7 +109,7 @@ const Addtask = ({ getData, taskData }) => {
       setText("");
       setCategory("Select Category");
       setPriority("Select Priority");
-      setEndDate("");
+      setEndDate(new Date().toISOString().split('T')[0]);
       setError(false);
       setErrorMsg(null);
     }
@@ -230,10 +233,10 @@ const Addtask = ({ getData, taskData }) => {
             className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] "
           >
             <option value="">Select Category</option>
-            <option value="💼 Work">Work</option>
-            <option value="🛒 Shopping">Shopping</option>
-            <option value="💪 Health">Health</option>
-            <option value="👩🏻‍💻 Study">Study</option>
+            <option value="Work">Work</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Health">Health</option>
+            <option value="Study">Study</option>
           </select>
 
           <select
