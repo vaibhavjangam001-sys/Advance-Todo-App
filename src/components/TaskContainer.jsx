@@ -64,13 +64,19 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
   };
 
   return (
-    <div className="h-auto w-full bg-[rgb(38,44,44)] rounded-2xl">
-      <div className="lg:min-h-24 rounded-tl-2xl rounded-tr-2xl border-b-6 p-10 border-b-[#101828] gap-10 flex justify-center items-center">
+    <div className=" w-full bg-[rgb(38,44,44)]  rounded-[5px] md:rounded-2xl">
+      <div
+        className=" rounded-tl-2xl rounded-tr-2xl border-b-6 border-b-[#101828]
+        p-4 md:p-10
+        gap-4 md:gap-10
+        flex flex-col md:flex-row
+        items-stretch md:items-center"
+      >
         <div className="relative flex-[4]">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className=" border w-full font-bold pl-4  pr-12 h-10 rounded-[8px] bg-[#374151]"
+            className=" border w-full font-bold pl-4  pr-12 h-10 rounded-[5px] md:rounded-[8px] bg-[#374151]"
             type="search"
             placeholder="Search Todos..."
           />
@@ -83,7 +89,7 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="flex-1 border font-bold cursor-pointer  h-10 rounded-[8px] bg-[#374151]"
+          className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] "
           name=""
           id=""
         >
@@ -96,7 +102,7 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="flex-1 border font-bold cursor-pointer h-10 rounded-[8px] bg-[#374151]"
+          className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] "
           name=""
           id=""
         >
@@ -109,7 +115,7 @@ const TaskContainer = ({ taskData, getData, editTask }) => {
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="flex-1 border font-bold h-10 cursor-pointer rounded-[8px] bg-[#374151]"
+          className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] "
           name=""
           id=""
         >

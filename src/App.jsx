@@ -1,20 +1,15 @@
-import Contact from "./components/Contact";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
-import { Route, Routes } from "react-router-dom";
-import SingUpLogin from "./components/SingUpLogin";
-
 
 const App = () => {
   return (
-    <>
+    <div className="min-h-screen">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/singUpLogin" element={<SingUpLogin />} />
-      </Routes>
-    </>
+
+      <main className="max-w-7xl mx-auto px-4">
+        <Home />
+      </main>
+    </div>
   );
 };
 

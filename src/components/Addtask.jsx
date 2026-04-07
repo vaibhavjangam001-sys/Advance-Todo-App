@@ -8,7 +8,7 @@ const Addtask = ({ getData, taskData }) => {
   const [priority, setPriority] = useState("Select Priority");
   const [endDate, setEndDate] = useState("");
   const [editId, setEditId] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -209,9 +209,8 @@ const Addtask = ({ getData, taskData }) => {
   return (
     <>
       <div
-        className={`${error ? "h-auto" : "lg:h-80"} w-full p-8 mt-[-50px] bg-[rgb(38,44,44)] rounded-2xl flex flex-col gap-4`}
+        className={`${error ? "h-auto" : "lg:h-80"} w-full md:p-8  bg-[rgb(38,44,44)] p-4  rounded-[5px] md:rounded-2xl flex flex-col gap-4 shadow-lg`}
       >
-        <div>
           <textarea
             autoComplete="off"
             autoCorrect="off"
@@ -221,16 +220,14 @@ const Addtask = ({ getData, taskData }) => {
             value={text}
             maxLength={210}
             placeholder="Enter Todo..."
-            className="w-full h-24 resize-none p-3 rounded-[8px] bg-[#374151] border font-bold"
+            className="w-full h-24 resize-none font-semibold p-3 rounded-[2px] md:rounded-[5px] bg-[#374151] border outline-none md:font-bold"
           ></textarea>
-        </div>
-        <div className="flex justify-around items-center gap-12">
+
+        <div className="flex flex-col md:flex-row gap-4  md:gap-12">
           <select
             onChange={(e) => setCategory(e.target.value)}
             value={category}
-            className="border font-bold  flex-1 h-10 cursor-pointer  rounded-[8px] bg-[#374151] inl"
-            name=""
-            id=""
+            className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] "
           >
             <option value="">Select Category</option>
             <option value="💼 Work">Work</option>
@@ -242,7 +239,7 @@ const Addtask = ({ getData, taskData }) => {
           <select
             onChange={(e) => setPriority(e.target.value)}
             value={priority}
-            className="flex-1 border font-bold  cursor-pointer  h-10 rounded-[8px] bg-[#374151]"
+            className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] "
             name=""
             id=""
           >
@@ -259,7 +256,7 @@ const Addtask = ({ getData, taskData }) => {
           </select>
           <div
             onClick={() => dateRef.current.showPicker()}
-            className="bg-[#374151] border flex-1 h-10 rounded-[8px] flex items-center px-4 cursor-pointer"
+            className="border font-semibold md:font-bold w-full rounded-[2px] p-1  flex-1 h-10 cursor-pointer  md:rounded-[5px] bg-[#374151] -[#374151] border"
           >
             {" "}
             <input
@@ -271,29 +268,31 @@ const Addtask = ({ getData, taskData }) => {
             />
           </div>
         </div>
-        <div className="flex gap-2">
+
+
+        <div className="flex flex-col md:flex-row gap-3">
           <button
             onClick={handleSubmit}
-            className={`flex-1 h-12 font-bold hover:cursor-pointer active:bg-[#4474da] rounded-[8px] ${
+            className={`flex-1 h-12 font-semibold md:font-bold hover:cursor-pointer active:bg-[#4474da] rounded-[2px] md:rounded-[5px] ${
               isEdit ? "bg-[#10B981]" : "bg-[#2563EB]"
             }`}
           >
-            <span className="text-2xl">{isEdit ? "✏️" : "+"}</span>
+            <span className=" text-sm md:text-2xl">{isEdit ? "✏️" : "+"}</span>
             {isEdit ? " Update Todo" : " Add Todo"}
           </button>
 
           {isEdit && (
             <button
               onClick={resetForm}
-              className="flex-1 h-12 bg-[#6B7280] font-bold hover:cursor-pointer active:bg-[#4B5563] rounded-[8px]"
+              className="flex-1 h-12 bg-[#6B7280]  font-semibold md:font-bold hover:cursor-pointer active:bg-[#4B5563] rounded-[2px] md:rounded-[5px]"
             >
               Cancel
             </button>
           )}
         </div>
         {error && errorMsg && (
-          <div className="flex-1 bg-red-600 rounded-2xl">
-            <span className="text-white font-bold text-sm pl-5">
+          <div className="flex-1 bg-red-600 rounded-[2px] md:rounded-[5px] flex  ">
+            <span className="text-white font-semibold md:font-bold text-sm p-2 md:pl-5">
               Warning : - {errorMsg}{" "}
             </span>
           </div>
