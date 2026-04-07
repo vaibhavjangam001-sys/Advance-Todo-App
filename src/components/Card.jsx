@@ -4,7 +4,7 @@ const Card = ({ item, deleteTodo, editTask, completedTodo }) => {
   return (
     <div className="bg-[#374151] p-4 w-full rounded-2xl shadow-md">
 
-      {/* ================= MOBILE VIEW ================= */}
+     
       <div className="flex flex-col gap-3 md:hidden">
 
         {/* TEXT */}
@@ -20,22 +20,22 @@ const Card = ({ item, deleteTodo, editTask, completedTodo }) => {
           </p>
         </div>
 
-        {/* TAGS (EQUAL WIDTH) */}
+     
         <div className="flex gap-2">
 
-          {/* PRIORITY */}
+        
           <span
             className={`flex-1 text-center px-2 py-1 rounded text-xs font-bold text-black ${item.priority[1]}`}
           >
             {item.priority[0]}
           </span>
 
-          {/* CATEGORY */}
+         
           <span className="flex-1 text-center px-2 py-1 rounded text-xs font-bold text-black bg-blue-500">
             {item.category}
           </span>
 
-          {/* STATUS */}
+     
           <span
             className={`flex-1 text-center px-2 py-1 rounded text-xs font-bold text-black ${
               item.status === "Active"
@@ -50,7 +50,7 @@ const Card = ({ item, deleteTodo, editTask, completedTodo }) => {
 
         </div>
 
-        {/* BUTTONS */}
+      
         <div className="flex justify-center gap-3">
 
           <Button
@@ -81,7 +81,7 @@ const Card = ({ item, deleteTodo, editTask, completedTodo }) => {
 
       </div>
 
-      {/* ================= LAPTOP VIEW (UNCHANGED) ================= */}
+     
       <div className="hidden md:flex flex-col gap-3">
 
         <div className="flex w-full gap-4">
